@@ -31,6 +31,17 @@ $ cd confluent-windows-5.0.1
 cd confluent-windows-5.0.1/bin/windows
 confluent.bat
 
+Services started :->
+
+zookeeper
+kafka
+schema-registry
+worker
+
+## Access Worker
+  
+  http://localhost:8083/connectors
+
 ## Stopping Confluent
 
 cd confluent-windows-5.0.1/bin/windows
