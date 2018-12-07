@@ -22,21 +22,21 @@ company.
 
 First obtain the code by cloning the Git repository:
 
-$ git clone https://github.com/mduhan/confluent-windows-5.0.1.git
-$ cd confluent-windows-5.0.1
+- $ git clone https://github.com/mduhan/confluent-windows-5.0.1.git
+- $ cd confluent-windows-5.0.1
 
 
 ## Running Confluent
 
-cd confluent-windows-5.0.1/bin/windows
-confluent.bat
+- cd confluent-windows-5.0.1/bin/windows
+- confluent.bat
 
 ### Services started :->
 
-zookeeper
-kafka
-schema-registry
-worker
+- zookeeper
+- kafka
+- schema-registry
+- worker
 
 ## Access Worker
   
@@ -44,6 +44,6 @@ worker
 
 ## Stopping Confluent
 
-cd confluent-windows-5.0.1/bin/windows
-confluent-stop.bat
+- cd confluent-windows-5.0.1/bin/windows
+- confluent-stop.bat
 
