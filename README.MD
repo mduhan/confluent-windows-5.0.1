@@ -47,3 +47,8 @@ worker
 cd confluent-windows-5.0.1/bin/windows
 confluent-stop.bat
 
+## Reset Confluent ( This will delete complete data from zookeeper and kafka )
+
+cd confluent-windows-5.0.1/bin/windows
+confluent-reset.bat
+
