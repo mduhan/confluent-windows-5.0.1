@@ -15,3 +15,24 @@ processing engines that transform the data streams as they arrive.
 This infrastructure lets you build around a single central nervous system
 transmitting messages to all the different systems and applications within your
 company.
+
+# This is window supported patch of confluent 5.0.1.
+
+## Cloning the confluent
+
+First obtain the code by cloning the Git repository:
+
+$ git clone https://github.com/mduhan/confluent-windows-5.0.1.git
+$ cd confluent-windows-5.0.1
+
+
+## Running Confluent
+
+cd confluent-windows-5.0.1/bin/windows
+confluent.bat
+
+## Stopping Confluent
+
+cd confluent-windows-5.0.1/bin/windows
+confluent-stop.bat
+

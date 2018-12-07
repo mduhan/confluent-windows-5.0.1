@@ -1,0 +1,1 @@
+start connect-distributed.bat ..\..\etc\schema-registry\connect-avro-distributed.properties %*
