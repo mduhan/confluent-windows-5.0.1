@@ -1,0 +1,52 @@
+#!/bin/bash
+# (Copyright) [2016 - 2016] Confluent, Inc.
+
+#
+# Use shellcheck to lint this file
+#
+
+set -ue
+
+usage() {
+  echo "$(basename "$0")": ERROR: "$*" 1>&2
+  echo usage: "$(basename "$0")" 'props_file' 1>&2
+  exit 1
+}
+
+props_file=""
+EXTRA_ARGS=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -*) #Pass through anything that begins with -
+      EXTRA_ARGS+=("$1")
+      shift
+      ;;
+    *) #Treat anything else as properties file
+      props_file="$1"
+      shift
+      ;;
+  esac
+done
+
+if [ -z "$props_file" ]
+then
+  usage "Properties file is required"
+fi
+
+: "${PRINCIPAL:="User:kafkaclient"}"
+
+bin_dir=$(dirname "$0")
+
+eval $(
+  # disable default log configuration
+  export CONTROL_CENTER_OPTS="-Dlog4j.defaultInitOverride=true"
+  "$bin_dir"/control-center-run-class io.confluent.controlcenter.tools.Topics "$props_file"
+  )
+
+for topic in $INPUT_TOPICS $INTERNAL_TOPICS
+do
+  echo "Setting acls for topic $topic"
+  "$bin_dir"/control-center-run-class kafka.admin.AclCommand --authorizer-properties zookeeper.connect="$ZOOKEEPER_CONNECT" --add --allow-principal "$PRINCIPAL" --producer --topic "$topic" > /dev/null 2>&1 || echo "Failed"
+  "$bin_dir"/control-center-run-class kafka.admin.AclCommand --authorizer-properties zookeeper.connect="$ZOOKEEPER_CONNECT" --add --allow-principal "$PRINCIPAL" --consumer --group "$APP_ID" --topic "$topic" > /dev/null 2>&1 || echo "Failed"
+  "$bin_dir"/control-center-run-class kafka.admin.AclCommand --authorizer-properties zookeeper.connect="$ZOOKEEPER_CONNECT" --add --allow-principal "$PRINCIPAL" --consumer --group "${APP_ID}-command" --topic "$topic" > /dev/null 2>&1 || echo "Failed"
+done
